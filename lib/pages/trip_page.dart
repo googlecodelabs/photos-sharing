@@ -15,8 +15,8 @@
  */
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:sharing_codelab/components/contribute_photo_dialog.dart';
 import 'package:sharing_codelab/components/primary_raised_button.dart';
@@ -25,12 +25,14 @@ import 'package:sharing_codelab/photos_library_api/album.dart';
 import 'package:sharing_codelab/photos_library_api/batch_create_media_items_response.dart';
 import 'package:sharing_codelab/photos_library_api/media_item.dart';
 import 'package:sharing_codelab/photos_library_api/search_media_items_response.dart';
+import 'package:sharing_codelab/util/to_be_implemented.dart';
 
 class TripPage extends StatefulWidget {
-  final Future<SearchMediaItemsResponse> searchResponse;
-  final Album album;
-
   const TripPage({Key key, this.searchResponse, this.album}) : super(key: key);
+
+  final Future<SearchMediaItemsResponse> searchResponse;
+
+  final Album album;
 
   @override
   State<StatefulWidget> createState() =>
@@ -40,8 +42,9 @@ class TripPage extends StatefulWidget {
 class _TripPageState extends State<TripPage> {
   _TripPageState({this.searchResponse, this.album});
 
-  final Album album;
+  Album album;
   Future<SearchMediaItemsResponse> searchResponse;
+  bool _inSharingApiCall = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,68 +53,99 @@ class _TripPageState extends State<TripPage> {
       appBar: AppBar(
         elevation: 0,
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            width: 370,
-            child: Text(
-              album.title ?? '[no title]',
-              style: TextStyle(
-                fontSize: 36,
+      body: Builder(builder: (BuildContext context) {
+        return Column(
+          children: <Widget>[
+            Container(
+              width: 370,
+              child: Text(
+                album.title ?? '[no title]',
+                style: TextStyle(
+                  fontSize: 36,
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
-          ),
-          Container(
-            width: 254,
-            child: FlatButton(
-              onPressed: () =>
-                  _showShareToken(context, album.shareInfo.shareToken),
-              textColor: Colors.green,
-              child: const Text('SHARE WITH GOOGLE PHOTOS'),
+            _buildShareButtons(context),
+            Container(
+              width: 348,
+              margin: const EdgeInsets.only(bottom: 32),
+              child: PrimaryRaisedButton(
+                label: const Text('ADD PHOTO'),
+                onPressed: () => _contributePhoto(context),
+              ),
             ),
-          ),
-          Container(
-            width: 348,
-            margin: const EdgeInsets.only(bottom: 32),
-            child: PrimaryRaisedButton(
-              label: const Text('Contribute'),
-              onPressed: () => _contributePhoto(context),
-            ),
-          ),
-          FutureBuilder<SearchMediaItemsResponse>(
-            future: searchResponse,
-            builder: _buildMediaItemList,
-          )
-        ],
-      ),
-    );
-  }
-
-  void _showShareToken(BuildContext context, String shareToken) {
-    TextEditingController shareTokenController =
-        new TextEditingController(text: shareToken);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Use this share token'),
-          content: TextField(controller: shareTokenController),
-          actions: <Widget>[
-            FlatButton(
-              child: const Text("Copy and Close"),
-              onPressed: () async {
-                await ClipboardManager.copyToClipBoard(shareToken);
-                Navigator.of(context).pop();
-              },
+            FutureBuilder<SearchMediaItemsResponse>(
+              future: searchResponse,
+              builder: _buildMediaItemList,
             )
           ],
         );
-      },
+      }),
     );
   }
 
-  Future _contributePhoto(context) async {
+  Future<void> _shareAlbum(BuildContext context) async {
+    // TODO(codelab): Implement this method.
+    ToBeImplemented.showMessage();
+
+    // If the album is not shared yet, call the Library API to share it and
+    // update the local model
+
+    // Once the album contains the shareInfo data, display its share token
+  }
+
+  void _showShareableUrl(BuildContext context) {
+    // TODO(codelab): Implement this method.
+    ToBeImplemented.showMessage();
+  }
+
+  void _showShareToken(BuildContext context) {
+    // TODO(codelab): Implement this method.
+    ToBeImplemented.showMessage();
+  }
+
+  void _showTokenDialog(BuildContext context) {
+    // TODO(codelab): Implement this method.
+    ToBeImplemented.showMessage();
+  }
+
+  void _showUrlDialog(BuildContext context) {
+    // TODO(codelab): Implement this method.
+    ToBeImplemented.showMessage();
+  }
+
+  void _showShareDialog(BuildContext context, String title, String text) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    text,
+                  ),
+                ),
+                FlatButton(
+                  child: const Text('Copy'),
+                  onPressed: () => Clipboard.setData(ClipboardData(text: text)),
+                )
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void _contributePhoto(BuildContext context) {
     setState(() {
       searchResponse = showDialog<ContributePhotoResult>(
           context: context,
@@ -119,19 +153,42 @@ class _TripPageState extends State<TripPage> {
             return ContributePhotoDialog();
           }).then((ContributePhotoResult result) {
         return ScopedModel.of<PhotosLibraryApiModel>(context)
-            .addMediaItemToAlbum(
-                result.uploadToken, album.id, result.description);
-      }).then((BatchCreateMediaItemsResponse lolWot) {
+            .createMediaItem(result.uploadToken, album.id, result.description);
+      }).then((BatchCreateMediaItemsResponse response) {
         return ScopedModel.of<PhotosLibraryApiModel>(context)
             .searchMediaItems(album.id);
       });
     });
   }
 
+  Widget _buildShareButtons(BuildContext context) {
+    if (_inSharingApiCall) {
+      return const CircularProgressIndicator();
+    }
+
+    return Column(children: <Widget>[
+      Container(
+        width: 254,
+        child: FlatButton(
+          onPressed: () => _showShareableUrl(context),
+          textColor: Colors.green[800],
+          child: const Text('SHARE WITH ANYONE'),
+        ),
+      ),
+      Container(
+        width: 254,
+        child: FlatButton(
+          onPressed: () => _showShareToken(context),
+          textColor: Colors.green[800],
+          child: const Text('SHARE IN FIELD TRIPPA'),
+        ),
+      ),
+    ]);
+  }
+
   Widget _buildMediaItemList(
       BuildContext context, AsyncSnapshot<SearchMediaItemsResponse> snapshot) {
     if (snapshot.hasData) {
-      print(snapshot.data.mediaItems);
       if (snapshot.data.mediaItems == null) {
         return Container();
       }
@@ -171,7 +228,7 @@ class _TripPageState extends State<TripPage> {
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 2),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 2),
           width: 364,
           child: Text(
             mediaItem.description ?? '',

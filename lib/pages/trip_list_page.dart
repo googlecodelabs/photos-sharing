@@ -16,6 +16,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/pages/create_trip_page.dart';
@@ -24,6 +25,7 @@ import 'package:sharing_codelab/components/primary_raised_button.dart';
 import 'package:sharing_codelab/components/trip_app_bar.dart';
 import 'package:sharing_codelab/pages/trip_page.dart';
 import 'package:sharing_codelab/photos_library_api/album.dart';
+import 'package:sharing_codelab/util/to_be_implemented.dart';
 
 class TripListPage extends StatelessWidget {
   @override
@@ -39,20 +41,44 @@ class TripListPage extends StatelessWidget {
     return ScopedModelDescendant<PhotosLibraryApiModel>(
       builder: (BuildContext context, Widget child,
           PhotosLibraryApiModel photosLibraryApi) {
-        if (!photosLibraryApi.hasSharedAlbums) {
+        if (!photosLibraryApi.hasAlbums) {
           return Center(
             child: const CircularProgressIndicator(),
           );
         }
+
+        if (photosLibraryApi.albums.isEmpty) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              SvgPicture.asset(
+                'assets/ic_fieldTrippa.svg',
+                color: Colors.grey[300],
+                height: 148,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "You're not currently a member of any trip albums. "
+                      'Create a new trip album or join an existing one below.',
+                  style: TextStyle(color: Colors.grey[600], fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              _buildButtons(context),
+            ],
+          );
+        }
+
         return ListView.builder(
-          itemCount: photosLibraryApi.sharedAlbums.length + 1,
+          itemCount: photosLibraryApi.albums.length + 1,
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
               return _buildButtons(context);
             }
 
-            return _buildTripCard(context,
-                photosLibraryApi.sharedAlbums[index - 1], photosLibraryApi);
+            return _buildTripCard(
+                context, photosLibraryApi.albums[index - 1], photosLibraryApi);
           },
         );
       },
@@ -61,7 +87,6 @@ class TripListPage extends StatelessWidget {
 
   Widget _buildTripCard(BuildContext context, Album sharedAlbum,
       PhotosLibraryApiModel photosLibraryApi) {
-    final String url = sharedAlbum.coverPhotoBaseUrl ?? 'blah';
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -90,16 +115,19 @@ class TripListPage extends StatelessWidget {
             ),
             Container(
               height: 52,
-              padding: const EdgeInsets.only(left: 14),
-              child: Align(
-                alignment: const FractionalOffset(0, 0.5),
-                child: Text(
-                  sharedAlbum.title ?? '[no title]',
-                  style: TextStyle(
-                    fontSize: 18,
+              padding: const EdgeInsets.only(left: 8),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                _buildSharedIcon(sharedAlbum),
+                Align(
+                  alignment: const FractionalOffset(0, 0.5),
+                  child: Text(
+                    sharedAlbum.title ?? '[no title]',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
                 ),
-              ),
+              ]),
             ),
           ],
         ),
@@ -108,12 +136,17 @@ class TripListPage extends StatelessWidget {
   }
 
   Widget _buildTripThumbnail(Album sharedAlbum) {
-    if (sharedAlbum.coverPhotoBaseUrl == null) {
+    if (sharedAlbum.coverPhotoBaseUrl == null ||
+        sharedAlbum.mediaItemsCount == null) {
       return Container(
-        child: Center(child: const Text('FIX ME WITH PLACEHOLDER')),
         height: 160,
         width: 346,
-        color: Colors.black12,
+        color: Colors.grey[200],
+        padding: const EdgeInsets.all(5),
+        child: SvgPicture.asset(
+          'assets/ic_fieldTrippa.svg',
+          color: Colors.grey[350],
+        ),
       );
     }
 
@@ -130,15 +163,6 @@ class TripListPage extends StatelessWidget {
 
   Widget _buildButtons(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: const LinearGradient(
-        begin: Alignment.bottomCenter,
-        end: Alignment(0, 0.9),
-        colors: [
-          Color(0x44000000),
-          Color(0x22ffffff),
-        ],
-      )),
       padding: const EdgeInsets.all(30),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -156,7 +180,7 @@ class TripListPage extends StatelessWidget {
             label: const Text('CREATE A TRIP ALBUM'),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             child: Text(
               ' - or - ',
               style: TextStyle(
@@ -166,7 +190,7 @@ class TripListPage extends StatelessWidget {
             ),
           ),
           FlatButton(
-            textColor: Colors.green,
+            textColor: Colors.green[800],
             onPressed: () {
               Navigator.push(
                 context,
@@ -180,5 +204,18 @@ class TripListPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildSharedIcon(Album album) {
+    if (album.shareInfo != null) {
+      return const Padding(
+          padding: EdgeInsets.only(right: 8),
+          child: Icon(
+            Icons.folder_shared,
+            color: Colors.black38,
+          ));
+    } else {
+      return Container();
+    }
   }
 }

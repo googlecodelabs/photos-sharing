@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.photos.sharing_codelab;
+package com.google.codelab.photos.sharing;
 
 import android.os.Bundle;
 

@@ -29,6 +29,14 @@ class Album {
 
   Map<String, dynamic> toJson() => _$AlbumToJson(this);
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Album && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   String id;
   String title;
   String productUrl;

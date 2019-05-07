@@ -23,13 +23,16 @@ import 'package:http/http.dart' as http;
 import 'package:sharing_codelab/photos_library_api/batch_create_media_items_request.dart';
 import 'package:sharing_codelab/photos_library_api/batch_create_media_items_response.dart';
 import 'package:sharing_codelab/photos_library_api/create_album_request.dart';
+import 'package:sharing_codelab/photos_library_api/get_album_request.dart';
 import 'package:sharing_codelab/photos_library_api/join_shared_album_request.dart';
 import 'package:sharing_codelab/photos_library_api/join_shared_album_response.dart';
+import 'package:sharing_codelab/photos_library_api/list_albums_response.dart';
 import 'package:sharing_codelab/photos_library_api/list_shared_albums_response.dart';
 import 'package:sharing_codelab/photos_library_api/search_media_items_request.dart';
 import 'package:sharing_codelab/photos_library_api/search_media_items_response.dart';
 import 'package:sharing_codelab/photos_library_api/share_album_request.dart';
 import 'package:sharing_codelab/photos_library_api/share_album_response.dart';
+import 'package:path/path.dart' as path;
 
 class PhotosLibraryApiClient {
   PhotosLibraryApiClient(this._authHeaders);
@@ -37,21 +40,8 @@ class PhotosLibraryApiClient {
   Future<Map<String, String>> _authHeaders;
 
   Future<Album> createAlbum(CreateAlbumRequest request) async {
-    return http
-        .post(
-      'https://photoslibrary.googleapis.com/v1/albums',
-      body: jsonEncode(request),
-      headers: await _authHeaders,
-    )
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-        return Album.fromJson(jsonDecode(response.body));
-      },
-    );
+    // TODO(codelab): Implement this call.
+    return null;
   }
 
   Future<JoinSharedAlbumResponse> joinSharedAlbum(
@@ -86,9 +76,48 @@ class PhotosLibraryApiClient {
     );
   }
 
+  Future<Album> getAlbum(GetAlbumRequest request) async {
+    return http
+        .get(
+            'https://photoslibrary.googleapis.com/v1/albums/${request.albumId}',
+            headers: await _authHeaders)
+        .then(
+      (Response response) {
+        if (response.statusCode != 200) {
+          print(response.reasonPhrase);
+          print(response.body);
+        }
+
+        return Album.fromJson(jsonDecode(response.body));
+      },
+    );
+  }
+
+  Future<ListAlbumsResponse> listAlbums() async {
+    return http
+        .get(
+            'https://photoslibrary.googleapis.com/v1/albums?'
+            'pageSize=50',
+            headers: await _authHeaders)
+        .then(
+      (Response response) {
+        if (response.statusCode != 200) {
+          print(response.reasonPhrase);
+          print(response.body);
+        }
+
+        print(response.body);
+
+        return ListAlbumsResponse.fromJson(jsonDecode(response.body));
+      },
+    );
+  }
+
   Future<ListSharedAlbumsResponse> listSharedAlbums() async {
     return http
-        .get('https://photoslibrary.googleapis.com/v1/sharedAlbums?pageSize=50',
+        .get(
+            'https://photoslibrary.googleapis.com/v1/sharedAlbums?'
+            'pageSize=50&excludeNonAppCreatedData=true',
             headers: await _authHeaders)
         .then(
       (Response response) {
@@ -105,25 +134,13 @@ class PhotosLibraryApiClient {
   }
 
   Future<String> uploadMediaItem(File image) async {
-    Map<String, String> headers = Map<String, String>();
-    headers.addAll(await _authHeaders);
-    headers['Content-type'] = "application/octet-stream";
-    headers['X-Goog-Upload-Protocol'] = 'raw';
+    // TODO(codelab): Implement this method.
 
-    return http
-        .post(
-      "https://photoslibrary.googleapis.com/v1/uploads",
-      body: image.readAsBytesSync(),
-      headers: await _authHeaders,
-    )
-        .then((Response response) {
-      if (response.statusCode != 200) {
-        print(response.reasonPhrase);
-        print(response.body);
-      }
+    // Get the filename of the image
 
-      return response.body;
-    });
+    // Set up the headers required for this request.
+
+    // Make the HTTP request to upload the image. The file is sent in the body.
   }
 
   Future<SearchMediaItemsResponse> searchMediaItems(

@@ -25,13 +25,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<PhotosLibraryApiModel>(
-      builder:
-          (BuildContext context, Widget child, PhotosLibraryApiModel apiModel) {
-        if (apiModel.isLoggedIn()) {
-          return TripListPage();
-        }
-
-        return LoginPage();
+      builder: (context, child, apiModel) {
+        return apiModel.isLoggedIn() ? TripListPage() : LoginPage();
       },
     );
   }

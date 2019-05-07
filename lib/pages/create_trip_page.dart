@@ -19,7 +19,8 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:sharing_codelab/components/primary_raised_button.dart';
 import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/photos_library_api/album.dart';
-import 'package:sharing_codelab/photos_library_api/share_album_response.dart';
+
+import '../util/to_be_implemented.dart';
 
 class CreateTripPage extends StatefulWidget {
   @override
@@ -85,20 +86,14 @@ class _CreateTripPageState extends State<CreateTripPage> {
   }
 
   Future<void> _createTrip(BuildContext context) async {
-    setState(() {
-      _isLoading = true;
-    });
-    ScopedModel.of<PhotosLibraryApiModel>(context)
-        .createAlbum(tripNameFormController.text)
-        .then((Album album) {
-      ScopedModel.of<PhotosLibraryApiModel>(context)
-          .shareAlbum(album.id)
-          .then((ShareAlbumResponse response) {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.pop(context);
-      });
-    });
+    // Display the loading indicator.
+    setState(() => _isLoading = true);
+
+    // TODO(codelab): Implement call to PhotosLibraryApiModel scope here.
+    ToBeImplemented.showMessage();
+
+    // Hide the loading indicator.
+    setState(() => _isLoading = false);
+    Navigator.pop(context);
   }
 }

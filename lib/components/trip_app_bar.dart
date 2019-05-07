@@ -15,6 +15,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/pages/login_page.dart';
@@ -27,8 +28,19 @@ class TripAppBar extends StatelessWidget implements PreferredSizeWidget {
           (BuildContext context, Widget child, PhotosLibraryApiModel apiModel) {
         return AppBar(
           title: Row(
-            children: const <Widget>[
-              Text('Field Trippa'),
+            children: <Widget>[
+              Container(
+                child: SvgPicture.asset(
+                  'assets/ic_fieldTrippa.svg',
+                  excludeFromSemantics: true,
+                  color: Colors.green[800],
+                ),
+                padding: const EdgeInsets.only(right: 8),
+              ),
+              Text(
+                'Field Trippa',
+                style: TextStyle(color: Colors.green[800]),
+              ),
             ],
           ),
           actions: _buildActions(apiModel, context),
@@ -92,7 +104,7 @@ class TripAppBar extends StatelessWidget implements PreferredSizeWidget {
             return <PopupMenuEntry<_AppBarOverflowOptions>>[
               PopupMenuItem<_AppBarOverflowOptions>(
                 value: _AppBarOverflowOptions.signout,
-                child: const Text('Sign out'),
+                child: const Text('Disconnect from Google Photos'),
               )
             ];
           },

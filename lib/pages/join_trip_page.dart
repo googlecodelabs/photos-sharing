@@ -21,6 +21,7 @@ import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/photos_library_api/album.dart';
 import 'package:sharing_codelab/photos_library_api/join_shared_album_response.dart';
 import 'package:sharing_codelab/photos_library_api/share_album_response.dart';
+import 'package:sharing_codelab/util/to_be_implemented.dart';
 
 class JoinTripPage extends StatefulWidget {
   @override
@@ -73,9 +74,9 @@ class _JoinTripPageState extends State<JoinTripPage> {
                       ),
                     ),
                     Center(
-                      child: PrimaryRaisedButton(
-                        onPressed: () => _createTrip(context),
-                        label: const Text('Join Trip'),
+                      child: RaisedButton(
+                        onPressed: () => _joinTrip(context),
+                        child: const Text('Join Trip'),
                       ),
                     ),
                   ],
@@ -85,16 +86,17 @@ class _JoinTripPageState extends State<JoinTripPage> {
     );
   }
 
-  Future<void> _createTrip(BuildContext context) async {
-    setState(() {
-      _isLoading = true;
-    });
-    await ScopedModel.of<PhotosLibraryApiModel>(context)
-        .joinSharedAlbum(shareTokenFormController.text);
+  Future<void> _joinTrip(BuildContext context) async {
+    // TODO(codelab): Implement this call
+    ToBeImplemented.showMessage();
 
-    setState(() {
-      _isLoading = false;
-    });
+    // Show loading indicator
+
+    // Call the API to join an album with the entered share token
+
+    // Hide loading indicator
+
+    // Return to the previous screen
     Navigator.pop(context);
   }
 }

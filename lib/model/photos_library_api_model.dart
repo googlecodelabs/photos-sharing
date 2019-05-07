@@ -24,7 +24,9 @@ import 'package:sharing_codelab/photos_library_api/batch_create_media_items_requ
 import 'package:sharing_codelab/photos_library_api/batch_create_media_items_response.dart';
 import 'package:sharing_codelab/photos_library_api/create_album_request.dart';
 import 'package:sharing_codelab/photos_library_api/join_shared_album_request.dart';
+import 'package:sharing_codelab/photos_library_api/get_album_request.dart';
 import 'package:sharing_codelab/photos_library_api/join_shared_album_response.dart';
+import 'package:sharing_codelab/photos_library_api/list_albums_response.dart';
 import 'package:sharing_codelab/photos_library_api/list_shared_albums_response.dart';
 import 'package:sharing_codelab/photos_library_api/photos_library_api_client.dart';
 import 'package:sharing_codelab/photos_library_api/search_media_items_request.dart';
@@ -40,14 +42,14 @@ class PhotosLibraryApiModel extends Model {
     });
   }
 
-  List<Album> _sharedAlbums = <Album>[];
-  bool hasSharedAlbums = false;
+  final LinkedHashSet<Album> _albums = LinkedHashSet<Album>();
+  bool hasAlbums = false;
   PhotosLibraryApiClient client;
 
   GoogleSignInAccount _currentUser;
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
-    'email',
+    'profile',
     'https://www.googleapis.com/auth/photoslibrary',
     'https://www.googleapis.com/auth/photoslibrary.sharing'
   ]);
@@ -57,10 +59,16 @@ class PhotosLibraryApiModel extends Model {
     return _currentUser != null;
   }
 
-  Future<void> signIn() async {
+  Future<bool> signIn() async {
     await _googleSignIn.signIn();
+    if (_currentUser == null) {
+      // User could not be signed in
+      return false;
+    }
+
     client = PhotosLibraryApiClient(_currentUser.authHeaders);
-    updateSharedAlbums();
+    updateAlbums();
+    return true;
   }
 
   Future<void> signOut() async {
@@ -70,13 +78,23 @@ class PhotosLibraryApiModel extends Model {
 
   Future<void> signInSilently() async {
     await _googleSignIn.signInSilently();
+    if (_currentUser == null) {
+      // User could not be signed in
+      return;
+    }
     client = PhotosLibraryApiClient(_currentUser.authHeaders);
-    updateSharedAlbums();
+    updateAlbums();
   }
 
   Future<Album> createAlbum(String title) async {
+    // TODO(codelab): Implement this call.
+
+    return null;
+  }
+
+  Future<Album> getAlbum(String id) async {
     return client
-        .createAlbum(CreateAlbumRequest.fromTitle(title))
+        .getAlbum(GetAlbumRequest.defaultOptions(id))
         .then((Album album) {
       return album;
     });
@@ -86,7 +104,7 @@ class PhotosLibraryApiModel extends Model {
     return client
         .joinSharedAlbum(JoinSharedAlbumRequest(shareToken))
         .then((JoinSharedAlbumResponse response) {
-      updateSharedAlbums();
+      updateAlbums();
       return response;
     });
   }
@@ -95,7 +113,7 @@ class PhotosLibraryApiModel extends Model {
     return client
         .shareAlbum(ShareAlbumRequest.defaultOptions(id))
         .then((ShareAlbumResponse response) {
-      updateSharedAlbums();
+      updateAlbums();
       return response;
     });
   }
@@ -112,27 +130,62 @@ class PhotosLibraryApiModel extends Model {
     return client.uploadMediaItem(image);
   }
 
-  Future<BatchCreateMediaItemsResponse> addMediaItemToAlbum(
+  Future<BatchCreateMediaItemsResponse> createMediaItem(
       String uploadToken, String albumId, String description) {
-    return client
-        .batchCreateMediaItems(BatchCreateMediaItemsRequest.inAlbum(
-            uploadToken, albumId, description))
-        .then((BatchCreateMediaItemsResponse response) {
-      print(response.newMediaItemResults[0].toJson());
-      return response;
-    });
+    // TODO(codelab): Implement this method.
+
+    return null;
+
+    // Construct the request with the token, albumId and description.
+
+    // Make the API call to create the media item. The response contains a
+    // media item.
   }
 
-  UnmodifiableListView<Album> get sharedAlbums =>
-      UnmodifiableListView<Album>(_sharedAlbums ?? <Album>[]);
+  UnmodifiableListView<Album> get albums =>
+      UnmodifiableListView<Album>(_albums ?? <Album>[]);
 
-  void updateSharedAlbums() {
-    hasSharedAlbums = false;
-    client.listSharedAlbums().then(
+  void updateAlbums() async {
+    // Reset the flag before loading new albums
+    hasAlbums = false;
+
+    // Clear all albums
+    _albums.clear();
+
+    // Add albums from the user's Google Photos account
+     var ownedAlbums = await _loadAlbums();
+     if (ownedAlbums != null) {
+       _albums.addAll(ownedAlbums);
+     }
+
+    /*
+    // Load albums from owned and shared albums
+    final List<List<Album>> list =
+    await Future.wait([_loadSharedAlbums(), _loadAlbums()]);
+
+    _albums.addAll(list.expand((a) => a));
+    */
+
+    notifyListeners();
+    hasAlbums = true;
+  }
+
+  /// Load Albums into the model by retrieving the list of all albums shared
+  /// with the user.
+  Future<List<Album>> _loadSharedAlbums() {
+    return client.listSharedAlbums().then(
       (ListSharedAlbumsResponse response) {
-        _sharedAlbums = response.sharedAlbums;
-        notifyListeners();
-        hasSharedAlbums = true;
+        return response.sharedAlbums;
+      },
+    );
+  }
+
+  /// Load albums into the model by retrieving the list of all albums owned
+  /// by the user.
+  Future<List<Album>> _loadAlbums() {
+    return client.listAlbums().then(
+      (ListAlbumsResponse response) {
+        return response.albums;
       },
     );
   }

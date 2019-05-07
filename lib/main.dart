@@ -20,7 +20,7 @@ import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/pages/home_page.dart';
 
 void main() {
-  final PhotosLibraryApiModel apiModel = PhotosLibraryApiModel();
+  final apiModel = PhotosLibraryApiModel();
   apiModel.signInSilently();
   runApp(
     ScopedModel<PhotosLibraryApiModel>(
@@ -35,33 +35,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_theme);
-
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Field Trippa',
       theme: _theme,
       home: HomePage(),
     );
   }
+}
 
-  static ThemeData _buildTheme() {
-    final ThemeData base = ThemeData.light();
-    return base.copyWith(
-      primaryColor: Colors.white,
-      primaryColorBrightness: Brightness.light,
-      primaryTextTheme: Typography.blackMountainView,
-      primaryIconTheme: const IconThemeData(
-        color: Colors.grey,
+
+ThemeData _buildTheme() {
+  final ThemeData base = ThemeData.light();
+  return base.copyWith(
+    primaryColor: Colors.white,
+    primaryColorBrightness: Brightness.light,
+    primaryTextTheme: Typography.blackMountainView,
+    primaryIconTheme: const IconThemeData(
+      color: Colors.grey,
+    ),
+    accentColor: Colors.green[800],
+    buttonTheme: base.buttonTheme.copyWith(
+      buttonColor: Colors.green[800],
+      textTheme: ButtonTextTheme.primary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
       ),
-      accentColor: Colors.green,
-      buttonTheme: base.buttonTheme.copyWith(
-        buttonColor: Colors.green,
-        textTheme: ButtonTextTheme.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
-        ),
-      ),
-      scaffoldBackgroundColor: Colors.white,
-    );
-  }
+    ),
+    scaffoldBackgroundColor: Colors.white,
+  );
 }
