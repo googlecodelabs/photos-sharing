@@ -25,7 +25,6 @@ import 'package:sharing_codelab/components/primary_raised_button.dart';
 import 'package:sharing_codelab/components/trip_app_bar.dart';
 import 'package:sharing_codelab/pages/trip_page.dart';
 import 'package:sharing_codelab/photos_library_api/album.dart';
-import 'package:sharing_codelab/util/to_be_implemented.dart';
 
 class TripListPage extends StatelessWidget {
   @override
