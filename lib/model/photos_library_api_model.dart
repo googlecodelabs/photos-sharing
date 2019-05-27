@@ -170,7 +170,7 @@ class PhotosLibraryApiModel extends Model {
     final List<List<Album>> list =
         await Future.wait([_loadSharedAlbums(), _loadAlbums()]);
 
-    _albums.addAll(list.expand((a) => a));
+    _albums.addAll(list.expand((a) => a ?? []));
 
     notifyListeners();
     hasAlbums = true;
