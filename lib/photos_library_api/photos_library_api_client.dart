@@ -111,7 +111,7 @@ class PhotosLibraryApiClient {
     return http
         .get(
             'https://photoslibrary.googleapis.com/v1/albums?'
-            'pageSize=50',
+            'excludeNonAppCreatedData=true&pageSize=50',
             headers: await _authHeaders)
         .then(
       (Response response) {
