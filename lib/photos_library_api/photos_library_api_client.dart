@@ -40,8 +40,22 @@ class PhotosLibraryApiClient {
   Future<Map<String, String>> _authHeaders;
 
   Future<Album> createAlbum(CreateAlbumRequest request) async {
-    // TODO(codelab): Implement this call.
-    return null;
+    // codelab step5
+    return http
+        .post(
+          'https://photoslibrary.googleapis.com/v1/albums'
+          ,body: jsonEncode(request)
+          ,headers: await _authHeaders
+    )
+        .then(
+        (Response response){
+          if(response.statusCode != 200){
+            print(response.reasonPhrase);
+            print(response.body);
+          }
+          return Album.fromJson(jsonDecode(response.body));
+        }
+    );
   }
 
   Future<JoinSharedAlbumResponse> joinSharedAlbum(

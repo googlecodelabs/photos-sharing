@@ -87,7 +87,13 @@ class PhotosLibraryApiModel extends Model {
   }
 
   Future<Album> createAlbum(String title) async {
-    // TODO(codelab): Implement this call.
+    // codelab step5
+    return client
+        .createAlbum(CreateAlbumRequest.fromTitle(title))
+        .then((Album album){
+       updateAlbums();
+       return album;
+    });
 
     return null;
   }
