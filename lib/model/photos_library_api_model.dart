@@ -138,14 +138,20 @@ class PhotosLibraryApiModel extends Model {
 
   Future<BatchCreateMediaItemsResponse> createMediaItem(
       String uploadToken, String albumId, String description) {
-    // TODO(codelab): Implement this method.
-
-    return null;
-
+    // codelab step7
     // Construct the request with the token, albumId and description.
+    final BatchCreateMediaItemsRequest request =
+      BatchCreateMediaItemsRequest.inAlbum(uploadToken, albumId, description);
 
     // Make the API call to create the media item. The response contains a
     // media item.
+    return client
+        .batchCreateMediaItems(request)
+        .then((BatchCreateMediaItemsResponse response){
+        // print and return the response
+      print(response.newMediaItemResults[0].toJson());
+      return response;
+    });
   }
 
   UnmodifiableListView<Album> get albums =>
