@@ -87,14 +87,16 @@ class _JoinTripPageState extends State<JoinTripPage> {
   }
 
   Future<void> _joinTrip(BuildContext context) async {
-    // TODO(codelab): Implement this call
-    ToBeImplemented.showMessage();
-
+    // codelab step9
     // Show loading indicator
+    setState(() => _isLoading = true);
 
     // Call the API to join an album with the entered share token
+    await ScopedModel.of<PhotosLibraryApiModel>(context)
+      .joinSharedAlbum(shareTokenFormController.text);
 
     // Hide loading indicator
+    setState(() => _isLoading = false);
 
     // Return to the previous screen
     Navigator.pop(context);
