@@ -85,18 +85,41 @@ class _TripPageState extends State<TripPage> {
   }
 
   Future<void> _shareAlbum(BuildContext context) async {
-    // TODO(codelab): Implement this method.
-    ToBeImplemented.showMessage();
+    // codelab step8
 
-    // If the album is not shared yet, call the Library API to share it and
-    // update the local model
+    // Show loading indicator
+    setState(() {
+      _inSharingApiCall = true;
+    });
+    final SnackBar snackBar = SnackBar(
+        duration: Duration(seconds: 3),
+        content: const Text('Sharing Album'),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
 
-    // Once the album contains the shareInfo data, display its share token
+    // share the album & update local model
+    await ScopedModel.of<PhotosLibraryApiModel>(context).shareAlbum(album.id);
+    final Album updatedAlbum =
+      await ScopedModel.of<PhotosLibraryApiModel>(context).getAlbum(album.id);
+    print('Album has been shared');
+    setState(() {
+      album = updatedAlbum;
+      // hide loading indicator
+      _inSharingApiCall = false;
+    });
   }
 
   void _showShareableUrl(BuildContext context) {
-    // TODO(codelab): Implement this method.
-    ToBeImplemented.showMessage();
+    // codelab step8
+    // If the album is not shared yet, share it first, then display dialog
+    if(album.shareInfo == null || album.shareInfo.shareableUrl == null) {
+      _shareAlbum(context).then((_) {
+        _showUrlDialog(context);
+      });
+    }else{
+      // album is already shared, display URL dialog
+      _showUrlDialog(context);
+    }
   }
 
   void _showShareToken(BuildContext context) {
@@ -110,8 +133,13 @@ class _TripPageState extends State<TripPage> {
   }
 
   void _showUrlDialog(BuildContext context) {
-    // TODO(codelab): Implement this method.
-    ToBeImplemented.showMessage();
+    // codelab step8
+    print('This is the shareableUrl:\n${album.shareInfo.shareableUrl}');
+    _showShareDialog(
+        context,
+        'Share this URL with anyone.'
+            'Anyone with the URL may access all items',
+        album.shareInfo.shareableUrl);
   }
 
   void _showShareDialog(BuildContext context, String title, String text) {
