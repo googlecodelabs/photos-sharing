@@ -38,6 +38,17 @@ class PhotosLibraryApiModel extends Model {
   PhotosLibraryApiModel() {
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       _currentUser = account;
+
+      if (_currentUser != null) {
+        // Initialize the client with the new user credentials
+        client = PhotosLibraryApiClient(_currentUser.authHeaders);
+      } else {
+        // Reset the client
+        client = null;
+      }
+      // Reinitialize the albums
+      updateAlbums();
+
       notifyListeners();
     });
   }
@@ -60,30 +71,29 @@ class PhotosLibraryApiModel extends Model {
   }
 
   Future<bool> signIn() async {
-    await _googleSignIn.signIn();
-    if (_currentUser == null) {
+    final GoogleSignInAccount user = await _googleSignIn.signIn();
+
+    if (user == null) {
       // User could not be signed in
+      print('User could not be signed in.');
       return false;
     }
 
-    client = PhotosLibraryApiClient(_currentUser.authHeaders);
-    updateAlbums();
+    print('User signed in.');
     return true;
   }
 
   Future<void> signOut() async {
     await _googleSignIn.disconnect();
-    client = null;
   }
 
   Future<void> signInSilently() async {
-    await _googleSignIn.signInSilently();
+    final GoogleSignInAccount user = await _googleSignIn.signInSilently();
     if (_currentUser == null) {
       // User could not be signed in
       return;
     }
-    client = PhotosLibraryApiClient(_currentUser.authHeaders);
-    updateAlbums();
+    print('User signed in silently.');
   }
 
   Future<Album> createAlbum(String title) async {
@@ -159,6 +169,11 @@ class PhotosLibraryApiModel extends Model {
 
     // Clear all albums
     _albums.clear();
+
+    // Skip if not signed in
+    if (!isLoggedIn()) {
+      return;
+    }
 
     // Add albums from the user's Google Photos account
     // var ownedAlbums = await _loadAlbums();
