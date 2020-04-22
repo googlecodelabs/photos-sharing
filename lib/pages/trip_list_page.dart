@@ -151,8 +151,8 @@ class TripListPage extends StatelessWidget {
 
     return CachedNetworkImage(
       imageUrl: '${sharedAlbum.coverPhotoBaseUrl}=w346-h160-c',
-      placeholder: (BuildContext context, String url) =>
-          const CircularProgressIndicator(),
+      progressIndicatorBuilder: (context, url, downloadProgress) =>
+          CircularProgressIndicator(value: downloadProgress.progress),
       errorWidget: (BuildContext context, String url, Object error) {
         print(error);
         return const Icon(Icons.error);

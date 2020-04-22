@@ -256,8 +256,8 @@ class _TripPageState extends State<TripPage> {
         Center(
           child: CachedNetworkImage(
             imageUrl: '${mediaItem.baseUrl}=w364',
-            placeholder: (BuildContext context, String url) =>
-                const CircularProgressIndicator(),
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                CircularProgressIndicator(value: downloadProgress.progress),
             errorWidget: (BuildContext context, String url, Object error) {
               print(error);
               return const Icon(Icons.error);
