@@ -31,6 +31,7 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   File _image;
   String _uploadToken;
   bool _isUploading = false;
+  ImagePicker imagePicker = ImagePicker();
 
   TextEditingController descriptionController = TextEditingController();
 
@@ -132,10 +133,9 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   Future _getImage(BuildContext context) async {
     // Use the image_picker package to prompt the user for a photo from their
     // device.
-    final File image = await ImagePicker.pickImage(
+    final File image = await imagePicker.getImage(
       source: ImageSource.camera,
-    );
-
+    ).then((pickedFile) => File(pickedFile.path));
     // Store the image that was selected.
     setState(() {
       _image = image;
