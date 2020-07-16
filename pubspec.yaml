@@ -27,7 +27,7 @@ dependencies:
   scoped_model: ^1.0.1
   http: ^0.12.0+4
   json_annotation: ^3.0.1
-  image_picker: ^0.6.5+2
+  image_picker: ^0.6.7+4
   cached_network_image: ^2.1.0+1
   fluttertoast: ^4.0.1
   path: any
