@@ -2,7 +2,9 @@
 
 This branch contains the final implemented app.
 
-See the `main` branch for the initial version that you
+See the `main` branch for the initial version of the app that you should check out to begin the
+codelab.
+
 This codelab shows you how to build an application that uses the Google Photos Library API
 in Flutter.
 
@@ -27,7 +29,7 @@ enable a group of people to share photos during a field trip.
 ## Getting started
 
 Check out the `main` branch of this repository and follow the steps on
-http://codelabs.developers.google.com to get started.
+https://codelabs.developers.google.com/codelabs/google-photos-sharing to get started.
 
 ## License
 
