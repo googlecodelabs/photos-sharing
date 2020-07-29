@@ -32,6 +32,7 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   File _image;
   String _uploadToken;
   bool _isUploading = false;
+  final _imagePicker = ImagePicker();
 
   TextEditingController descriptionController = TextEditingController();
 
