@@ -22,16 +22,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.3
+  cupertino_icons: ^1.0.0
   google_sign_in: ^4.4.4
   scoped_model: ^1.0.1
   http: ^0.12.0+4
   json_annotation: ^3.0.1
   image_picker: ^0.6.7+4
-  cached_network_image: ^2.1.0+1
-  fluttertoast: ^4.0.1
+  cached_network_image: ^2.3.3
+  fluttertoast: ^7.1.1
   path: any
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.19.1
 
 
 dev_dependencies:
