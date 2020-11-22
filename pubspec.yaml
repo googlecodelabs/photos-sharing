@@ -31,7 +31,7 @@ dependencies:
   cached_network_image: ^2.1.0+1
   fluttertoast: ^4.0.1
   path: any
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.1
 
 
 dev_dependencies:
