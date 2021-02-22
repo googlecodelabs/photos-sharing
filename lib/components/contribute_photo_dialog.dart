@@ -38,8 +38,8 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       child: Container(
         padding: const EdgeInsets.all(14),
@@ -50,7 +50,7 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
                 _buildUploadButton(context),
                 TextFormField(
                   controller: descriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: 'Add a description',
                       labelStyle: TextStyle(
                         color: Colors.black,
@@ -89,12 +89,12 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
     return RaisedButton(
       child: const Text('ADD'),
       onPressed: () => Navigator.pop(
-            context,
-            ContributePhotoResult(
-              _uploadToken,
-              descriptionController.text,
-            ),
-          ),
+        context,
+        ContributePhotoResult(
+          _uploadToken,
+          descriptionController.text,
+        ),
+      ),
     );
   }
 
@@ -133,9 +133,11 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   Future _getImage(BuildContext context) async {
     // Use the image_picker package to prompt the user for a photo from their
     // device.
-    final File image = await _imagePicker.getImage(
-      source: ImageSource.camera,
-    ).then((pickedFile) => File(pickedFile.path));
+    final image = await _imagePicker
+        .getImage(
+          source: ImageSource.camera,
+        )
+        .then((pickedFile) => File(pickedFile.path));
     // Store the image that was selected.
     setState(() {
       _image = image;
@@ -143,9 +145,8 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
     });
 
     // Make a request to upload the image to Google Photos once it was selected.
-    final String uploadToken =
-        await ScopedModel.of<PhotosLibraryApiModel>(context)
-            .uploadMediaItem(image);
+    final uploadToken = await ScopedModel.of<PhotosLibraryApiModel>(context)
+        .uploadMediaItem(image);
 
     setState(() {
       // Once the upload process has completed, store the upload token.

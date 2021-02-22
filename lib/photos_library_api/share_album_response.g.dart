@@ -23,10 +23,14 @@ part of 'share_album_response.dart';
 // **************************************************************************
 
 ShareAlbumResponse _$ShareAlbumResponseFromJson(Map<String, dynamic> json) {
-  return ShareAlbumResponse(json['shareInfo'] == null
-      ? null
-      : ShareInfo.fromJson(json['shareInfo'] as Map<String, dynamic>));
+  return ShareAlbumResponse(
+    json['shareInfo'] == null
+        ? null
+        : ShareInfo.fromJson(json['shareInfo'] as Map<String, dynamic>),
+  );
 }
 
 Map<String, dynamic> _$ShareAlbumResponseToJson(ShareAlbumResponse instance) =>
-    <String, dynamic>{'shareInfo': instance.shareInfo};
+    <String, dynamic>{
+      'shareInfo': instance.shareInfo,
+    };

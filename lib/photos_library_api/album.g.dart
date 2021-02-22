@@ -24,16 +24,17 @@ part of 'album.dart';
 
 Album _$AlbumFromJson(Map<String, dynamic> json) {
   return Album(
-      json['id'] as String,
-      json['title'] as String,
-      json['productUrl'] as String,
-      json['isWriteable'] as bool,
-      json['shareInfo'] == null
-          ? null
-          : ShareInfo.fromJson(json['shareInfo'] as Map<String, dynamic>),
-      json['mediaItemsCount'] as String,
-      json['coverPhotoBaseUrl'] as String,
-      json['coverPhotoMediaItemId'] as String);
+    json['id'] as String,
+    json['title'] as String,
+    json['productUrl'] as String,
+    json['isWriteable'] as bool,
+    json['shareInfo'] == null
+        ? null
+        : ShareInfo.fromJson(json['shareInfo'] as Map<String, dynamic>),
+    json['mediaItemsCount'] as String,
+    json['coverPhotoBaseUrl'] as String,
+    json['coverPhotoMediaItemId'] as String,
+  );
 }
 
 Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
@@ -44,34 +45,37 @@ Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
       'shareInfo': instance.shareInfo,
       'mediaItemsCount': instance.mediaItemsCount,
       'coverPhotoBaseUrl': instance.coverPhotoBaseUrl,
-      'coverPhotoMediaItemId': instance.coverPhotoMediaItemId
+      'coverPhotoMediaItemId': instance.coverPhotoMediaItemId,
     };
 
 ShareInfo _$ShareInfoFromJson(Map<String, dynamic> json) {
   return ShareInfo(
-      json['sharedAlbumOptions'] == null
-          ? null
-          : SharedAlbumOptions.fromJson(
-              json['sharedAlbumOptions'] as Map<String, dynamic>),
-      json['shareableUrl'] as String,
-      json['shareToken'] as String,
-      json['isJoined'] as bool);
+    json['sharedAlbumOptions'] == null
+        ? null
+        : SharedAlbumOptions.fromJson(
+            json['sharedAlbumOptions'] as Map<String, dynamic>),
+    json['shareableUrl'] as String,
+    json['shareToken'] as String,
+    json['isJoined'] as bool,
+  );
 }
 
 Map<String, dynamic> _$ShareInfoToJson(ShareInfo instance) => <String, dynamic>{
       'sharedAlbumOptions': instance.sharedAlbumOptions,
       'shareableUrl': instance.shareableUrl,
       'shareToken': instance.shareToken,
-      'isJoined': instance.isJoined
+      'isJoined': instance.isJoined,
     };
 
 SharedAlbumOptions _$SharedAlbumOptionsFromJson(Map<String, dynamic> json) {
   return SharedAlbumOptions(
-      json['isCollaborative'] as bool, json['isCommentable'] as bool);
+    json['isCollaborative'] as bool,
+    json['isCommentable'] as bool,
+  );
 }
 
 Map<String, dynamic> _$SharedAlbumOptionsToJson(SharedAlbumOptions instance) =>
     <String, dynamic>{
       'isCollaborative': instance.isCollaborative,
-      'isCommentable': instance.isCommentable
+      'isCommentable': instance.isCommentable,
     };

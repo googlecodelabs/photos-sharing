@@ -23,10 +23,14 @@ part of 'create_album_request.dart';
 // **************************************************************************
 
 CreateAlbumRequest _$CreateAlbumRequestFromJson(Map<String, dynamic> json) {
-  return CreateAlbumRequest(json['album'] == null
-      ? null
-      : Album.fromJson(json['album'] as Map<String, dynamic>));
+  return CreateAlbumRequest(
+    json['album'] == null
+        ? null
+        : Album.fromJson(json['album'] as Map<String, dynamic>),
+  );
 }
 
 Map<String, dynamic> _$CreateAlbumRequestToJson(CreateAlbumRequest instance) =>
-    <String, dynamic>{'album': instance.album};
+    <String, dynamic>{
+      'album': instance.album,
+    };

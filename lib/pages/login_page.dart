@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(30),
               child: const Text(
                 'Trips from Field Trippa will be stored as shared albums in '
-                    'Google Photos',
+                'Google Photos',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.w500, color: Color(0x99000000)),
@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
               child: const Text('Connect with Google Photos'),
               onPressed: () async {
                 try {
-                  await apiModel.signIn()
+                  await apiModel.signIn() != null
                       ? _navigateToTripList(context)
                       : _showSignInError(context);
                 } on Exception catch (error) {
@@ -71,9 +71,9 @@ class LoginPage extends StatelessWidget {
   }
 
   void _showSignInError(BuildContext context) {
-    final SnackBar snackBar = SnackBar(
+    const snackBar = SnackBar(
       duration: Duration(seconds: 3),
-      content: const Text('Could not sign in.\n'
+      content: Text('Could not sign in.\n'
           'Is the Google Services file missing?'),
     );
     Scaffold.of(context).showSnackBar(snackBar);

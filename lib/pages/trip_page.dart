@@ -59,7 +59,7 @@ class _TripPageState extends State<TripPage> {
               width: 370,
               child: Text(
                 album.title ?? '[no title]',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 36,
                 ),
               ),
@@ -87,15 +87,15 @@ class _TripPageState extends State<TripPage> {
     // Show the loading indicator
     setState(() => _inSharingApiCall = true);
 
-    final SnackBar snackBar = SnackBar(
+    const snackBar = SnackBar(
       duration: Duration(seconds: 3),
-      content: const Text('Sharing Album...'),
+      content: Text('Sharing Album...'),
     );
     Scaffold.of(context).showSnackBar(snackBar);
 
     // Share the album and update the local model
     await ScopedModel.of<PhotosLibraryApiModel>(context).shareAlbum(album.id);
-    final Album updatedAlbum =
+    final updatedAlbum =
         await ScopedModel.of<PhotosLibraryApiModel>(context).getAlbum(album.id);
 
     print('Album has been shared.');
@@ -245,8 +245,8 @@ class _TripPageState extends State<TripPage> {
       return Container();
     }
 
-    return Center(
-      child: const CircularProgressIndicator(),
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 

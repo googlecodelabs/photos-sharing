@@ -37,7 +37,7 @@ import 'package:path/path.dart' as path;
 class PhotosLibraryApiClient {
   PhotosLibraryApiClient(this._authHeaders);
 
-  Future<Map<String, String>> _authHeaders;
+  final Future<Map<String, String>> _authHeaders;
 
   Future<Album> createAlbum(CreateAlbumRequest request) async {
     return http
@@ -148,10 +148,10 @@ class PhotosLibraryApiClient {
 
   Future<String> uploadMediaItem(File image) async {
     // Get the filename of the image
-    final String filename = path.basename(image.path);
+    final filename = path.basename(image.path);
 
     // Set up the headers required for this request.
-    final Map<String, String> headers = <String, String>{};
+    final headers = <String, String>{};
     headers.addAll(await _authHeaders);
     headers['Content-type'] = 'application/octet-stream';
     headers['X-Goog-Upload-Protocol'] = 'raw';

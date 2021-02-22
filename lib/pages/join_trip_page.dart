@@ -16,11 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:sharing_codelab/components/primary_raised_button.dart';
 import 'package:sharing_codelab/model/photos_library_api_model.dart';
-import 'package:sharing_codelab/photos_library_api/album.dart';
-import 'package:sharing_codelab/photos_library_api/join_shared_album_response.dart';
-import 'package:sharing_codelab/photos_library_api/share_album_response.dart';
 
 class JoinTripPage extends StatefulWidget {
   @override
@@ -46,7 +42,7 @@ class _JoinTripPageState extends State<JoinTripPage> {
       body: Container(
         padding: const EdgeInsets.all(25),
         child: _isLoading
-            ? Center(child: const CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Form(
                 key: _formKey,
                 child: Column(
@@ -56,7 +52,7 @@ class _JoinTripPageState extends State<JoinTripPage> {
                     TextFormField(
                       controller: shareTokenFormController,
                       autocorrect: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Paste the share token',
                       ),
                     ),
