@@ -42,8 +42,8 @@ class TripListPage extends StatelessWidget {
       builder: (BuildContext context, Widget child,
           PhotosLibraryApiModel photosLibraryApi) {
         if (!photosLibraryApi.hasAlbums) {
-          return Center(
-            child: const CircularProgressIndicator(),
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         }
 
@@ -60,7 +60,7 @@ class TripListPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   "You're not currently a member of any trip albums. "
-                      'Create a new trip album or join an existing one below.',
+                  'Create a new trip album or join an existing one below.',
                   style: TextStyle(color: Colors.grey[600], fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
@@ -88,8 +88,8 @@ class TripListPage extends StatelessWidget {
   Widget _buildTripCard(BuildContext context, Album sharedAlbum,
       PhotosLibraryApiModel photosLibraryApi) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       elevation: 3,
       clipBehavior: Clip.antiAlias,
@@ -99,15 +99,14 @@ class TripListPage extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => TripPage(
-                      album: sharedAlbum,
-                      searchResponse:
-                          photosLibraryApi.searchMediaItems(sharedAlbum.id),
-                    ),
-              ),
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => TripPage(
+              album: sharedAlbum,
+              searchResponse: photosLibraryApi.searchMediaItems(sharedAlbum.id),
             ),
+          ),
+        ),
         child: Column(
           children: <Widget>[
             Container(
@@ -122,7 +121,7 @@ class TripListPage extends StatelessWidget {
                   alignment: const FractionalOffset(0, 0.5),
                   child: Text(
                     sharedAlbum.title ?? '[no title]',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                     ),
                   ),
@@ -181,7 +180,7 @@ class TripListPage extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.only(top: 10),
-            child: Text(
+            child: const Text(
               ' - or - ',
               style: TextStyle(
                 color: Colors.grey,

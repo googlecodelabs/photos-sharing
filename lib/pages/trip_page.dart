@@ -60,7 +60,7 @@ class _TripPageState extends State<TripPage> {
               width: 370,
               child: Text(
                 album.title ?? '[no title]',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 36,
                 ),
               ),
@@ -208,8 +208,8 @@ class _TripPageState extends State<TripPage> {
       return Container();
     }
 
-    return Center(
-      child: const CircularProgressIndicator(),
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 

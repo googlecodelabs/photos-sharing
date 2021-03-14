@@ -45,7 +45,7 @@ class BatchCreateMediaItemsRequest {
 class NewMediaItem {
   NewMediaItem(this.description, this.simpleMediaItem);
 
-  NewMediaItem.simple(String uploadToken, this.description) {
+  NewMediaItem.simple(String uploadToken, description) {
     this.description = description;
     simpleMediaItem = SimpleMediaItem(uploadToken);
   }
@@ -75,6 +75,7 @@ class SimpleMediaItem {
 class AlbumPosition {
   AlbumPosition(
       this.relativeMediaItemId, this.relativeEnrichmentItemId, this.position);
+  AlbumPosition.absolute(this.position);
 
   factory AlbumPosition.fromJson(Map<String, dynamic> json) =>
       _$AlbumPositionFromJson(json);
@@ -85,7 +86,8 @@ class AlbumPosition {
   String relativeEnrichmentItemId;
   PositionType position;
 
-  static AlbumPosition lastInAlbum() {}
+  static AlbumPosition lastInAlbum() =>
+      AlbumPosition.absolute(PositionType.LAST_IN_ALBUM);
 }
 
 enum PositionType {

@@ -51,7 +51,7 @@ class TripAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   List<Widget> _buildActions(
       PhotosLibraryApiModel apiModel, BuildContext context) {
-    final List<Widget> widgets = <Widget>[];
+    final widgets = <Widget>[];
 
     if (apiModel.isLoggedIn()) {
       if (apiModel.user.photoUrl != null) {
@@ -68,12 +68,12 @@ class TripAppBar extends StatelessWidget implements PreferredSizeWidget {
         ));
       } else {
         // Placeholder to use when there is no photo URL.
-        final List<String> placeholderCharSources = <String>[
+        final placeholderCharSources = <String>[
           apiModel.user.displayName,
           apiModel.user.email,
           '-',
         ];
-        final String placeholderChar = placeholderCharSources
+        final placeholderChar = placeholderCharSources
             .firstWhere(
                 (String str) => str != null && str.trimLeft().isNotEmpty)
             .trimLeft()[0]
@@ -93,7 +93,7 @@ class TripAppBar extends StatelessWidget implements PreferredSizeWidget {
         PopupMenuButton<_AppBarOverflowOptions>(
           onSelected: (_AppBarOverflowOptions selection) async {
             await apiModel.signOut();
-            Navigator.pushReplacement(
+            await Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => LoginPage(),
@@ -102,9 +102,9 @@ class TripAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           itemBuilder: (BuildContext context) {
             return <PopupMenuEntry<_AppBarOverflowOptions>>[
-              PopupMenuItem<_AppBarOverflowOptions>(
+              const PopupMenuItem<_AppBarOverflowOptions>(
                 value: _AppBarOverflowOptions.signout,
-                child: const Text('Disconnect from Google Photos'),
+                child: Text('Disconnect from Google Photos'),
               )
             ];
           },

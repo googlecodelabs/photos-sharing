@@ -22,23 +22,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  cached_network_image: ^2.5.0
   cupertino_icons: ^1.0.0
-  google_sign_in: ^4.4.4
-  scoped_model: ^1.0.1
-  http: ^0.12.0+4
-  json_annotation: ^3.0.1
-  image_picker: ^0.6.7+4
-  cached_network_image: ^2.3.3
-  fluttertoast: ^7.1.1
-  path: any
   flutter_svg: ^0.19.1
+  fluttertoast: ^7.1.8
+  google_sign_in: ^4.5.9
+  http: ^0.12.0+4
+  image_picker: ^0.6.7+22
+  json_annotation: ^3.1.1
+  path: any
+  scoped_model: ^1.0.1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.9.0
-  json_serializable: ^3.3.0
+  build_runner: ^1.11.1
+  json_serializable: ^3.5.1
+  pedantic: ^1.9.0
 
 flutter:
   uses-material-design: true

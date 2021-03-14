@@ -39,8 +39,8 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       child: Container(
         padding: const EdgeInsets.all(14),
@@ -51,7 +51,7 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
                 _buildUploadButton(context),
                 TextFormField(
                   controller: descriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: 'Add a description',
                       labelStyle: TextStyle(
                         color: Colors.black,
@@ -90,12 +90,12 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
     return RaisedButton(
       child: const Text('ADD'),
       onPressed: () => Navigator.pop(
-            context,
-            ContributePhotoResult(
-              _uploadToken,
-              descriptionController.text,
-            ),
-          ),
+        context,
+        ContributePhotoResult(
+          _uploadToken,
+          descriptionController.text,
+        ),
+      ),
     );
   }
 

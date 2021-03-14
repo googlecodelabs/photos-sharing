@@ -45,7 +45,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
       body: Container(
         padding: const EdgeInsets.all(25),
         child: _isLoading
-            ? Center(child: const CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Form(
                 key: _formKey,
                 child: Column(
@@ -55,7 +55,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                     TextFormField(
                       controller: tripNameFormController,
                       autocorrect: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Trip name',
                       ),
                     ),
@@ -66,7 +66,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                       ),
                       child: const Text(
                         'This will create a shared album in your Google Photos'
-                            ' account',
+                        ' account',
                         style: TextStyle(
                           color: Colors.grey,
                         ),

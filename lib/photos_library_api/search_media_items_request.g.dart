@@ -24,8 +24,11 @@ part of 'search_media_items_request.dart';
 
 SearchMediaItemsRequest _$SearchMediaItemsRequestFromJson(
     Map<String, dynamic> json) {
-  return SearchMediaItemsRequest(json['albumId'] as String,
-      json['pageSize'] as int, json['pageToken'] as String);
+  return SearchMediaItemsRequest(
+    json['albumId'] as String,
+    json['pageSize'] as int,
+    json['pageToken'] as String,
+  );
 }
 
 Map<String, dynamic> _$SearchMediaItemsRequestToJson(
@@ -33,5 +36,5 @@ Map<String, dynamic> _$SearchMediaItemsRequestToJson(
     <String, dynamic>{
       'albumId': instance.albumId,
       'pageSize': instance.pageSize,
-      'pageToken': instance.pageToken
+      'pageToken': instance.pageToken,
     };

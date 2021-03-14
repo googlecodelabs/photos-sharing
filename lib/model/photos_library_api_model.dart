@@ -70,31 +70,12 @@ class PhotosLibraryApiModel extends Model {
     return _currentUser != null;
   }
 
-  Future<bool> signIn() async {
-    final GoogleSignInAccount user = await _googleSignIn.signIn();
+  Future<GoogleSignInAccount> signIn() => _googleSignIn.signIn();
 
-    if (user == null) {
-      // User could not be signed in
-      print('User could not be signed in.');
-      return false;
-    }
+  Future<GoogleSignInAccount> signInSilently() =>
+      _googleSignIn.signInSilently();
 
-    print('User signed in.');
-    return true;
-  }
-
-  Future<void> signOut() async {
-    await _googleSignIn.disconnect();
-  }
-
-  Future<void> signInSilently() async {
-    final GoogleSignInAccount user = await _googleSignIn.signInSilently();
-    if (_currentUser == null) {
-      // User could not be signed in
-      return;
-    }
-    print('User signed in silently.');
-  }
+  Future<void> signOut() => _googleSignIn.disconnect();
 
   Future<Album> createAlbum(String title) async {
     // TODO(codelab): Implement this call.

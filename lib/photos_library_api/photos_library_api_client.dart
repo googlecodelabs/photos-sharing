@@ -37,7 +37,7 @@ import 'package:path/path.dart' as path;
 class PhotosLibraryApiClient {
   PhotosLibraryApiClient(this._authHeaders);
 
-  Future<Map<String, String>> _authHeaders;
+  final Future<Map<String, String>> _authHeaders;
 
   Future<Album> createAlbum(CreateAlbumRequest request) async {
     // TODO(codelab): Implement this call.
