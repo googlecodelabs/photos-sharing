@@ -15,10 +15,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:sharing_codelab/components/primary_raised_button.dart';
-import 'package:sharing_codelab/model/photos_library_api_model.dart';
-import 'package:sharing_codelab/photos_library_api/album.dart';
 
 import '../util/to_be_implemented.dart';
 

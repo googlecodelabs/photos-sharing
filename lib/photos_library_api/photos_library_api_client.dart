@@ -32,7 +32,7 @@ import 'package:sharing_codelab/photos_library_api/search_media_items_request.da
 import 'package:sharing_codelab/photos_library_api/search_media_items_response.dart';
 import 'package:sharing_codelab/photos_library_api/share_album_request.dart';
 import 'package:sharing_codelab/photos_library_api/share_album_response.dart';
-import 'package:path/path.dart' as path;
+import 'package:path/path.dart' as path; // ignore: unused_import
 
 class PhotosLibraryApiClient {
   PhotosLibraryApiClient(this._authHeaders);
@@ -141,6 +141,9 @@ class PhotosLibraryApiClient {
     // Set up the headers required for this request.
 
     // Make the HTTP request to upload the image. The file is sent in the body.
+
+    //TODO(codelab): Remove this call in your final implementation.
+    return Future.value('to_be_implemented');
   }
 
   Future<SearchMediaItemsResponse> searchMediaItems(

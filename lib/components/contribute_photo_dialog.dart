@@ -18,8 +18,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/pages/trip_page.dart';
 import 'package:sharing_codelab/util/to_be_implemented.dart';
 
@@ -31,8 +29,8 @@ class ContributePhotoDialog extends StatefulWidget {
 class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   File _image;
   String _uploadToken;
-  bool _isUploading = false;
-  final _imagePicker = ImagePicker();
+  bool _isUploading = false; // ignore: prefer_final_fields
+  final _imagePicker = ImagePicker(); // ignore: unused_field
 
   TextEditingController descriptionController = TextEditingController();
 

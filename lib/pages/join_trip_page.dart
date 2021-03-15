@@ -15,8 +15,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/util/to_be_implemented.dart';
 
 class JoinTripPage extends StatefulWidget {
@@ -26,7 +24,7 @@ class JoinTripPage extends StatefulWidget {
 
 class _JoinTripPageState extends State<JoinTripPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
+  bool _isLoading = false; // ignore: prefer_final_fields
   final TextEditingController shareTokenFormController =
       TextEditingController();
 

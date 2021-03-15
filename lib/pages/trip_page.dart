@@ -44,7 +44,7 @@ class _TripPageState extends State<TripPage> {
 
   Album album;
   Future<SearchMediaItemsResponse> searchResponse;
-  bool _inSharingApiCall = false;
+  bool _inSharingApiCall = false; // ignore: prefer_final_fields
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class _TripPageState extends State<TripPage> {
     );
   }
 
-  Future<void> _shareAlbum(BuildContext context) async {
+  Future<void> _shareAlbum(BuildContext context) async { // ignore: unused_element
     // TODO(codelab): Implement this method.
     ToBeImplemented.showMessage();
 
@@ -104,17 +104,17 @@ class _TripPageState extends State<TripPage> {
     ToBeImplemented.showMessage();
   }
 
-  void _showTokenDialog(BuildContext context) {
+  void _showTokenDialog(BuildContext context) { // ignore: unused_element
     // TODO(codelab): Implement this method.
     ToBeImplemented.showMessage();
   }
 
-  void _showUrlDialog(BuildContext context) {
+  void _showUrlDialog(BuildContext context) { // ignore: unused_element
     // TODO(codelab): Implement this method.
     ToBeImplemented.showMessage();
   }
 
-  void _showShareDialog(BuildContext context, String title, String text) {
+  void _showShareDialog(BuildContext context, String title, String text) { // ignore: unused_element
     showDialog(
         context: context,
         builder: (BuildContext context) {
