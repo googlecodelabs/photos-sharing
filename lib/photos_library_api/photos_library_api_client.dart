@@ -40,110 +40,75 @@ class PhotosLibraryApiClient {
   final Future<Map<String, String>> _authHeaders;
 
   Future<Album> createAlbum(CreateAlbumRequest request) async {
-    return http
-        .post(
-      'https://photoslibrary.googleapis.com/v1/albums',
+    final response = await http.post(
+      Uri.parse('https://photoslibrary.googleapis.com/v1/albums'),
       body: jsonEncode(request),
       headers: await _authHeaders,
-    )
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-        return Album.fromJson(jsonDecode(response.body));
-      },
     );
+
+    printError(response);
+
+    return Album.fromJson(jsonDecode(response.body));
   }
 
   Future<JoinSharedAlbumResponse> joinSharedAlbum(
       JoinSharedAlbumRequest request) async {
-    return http
-        .post('https://photoslibrary.googleapis.com/v1/sharedAlbums:join',
-            headers: await _authHeaders, body: jsonEncode(request))
-        .then((Response response) {
-      if (response.statusCode != 200) {
-        print(response.reasonPhrase);
-        print(response.body);
-      }
+    final response = await http.post(
+        Uri.parse('https://photoslibrary.googleapis.com/v1/sharedAlbums:join'),
+        headers: await _authHeaders,
+        body: jsonEncode(request));
 
-      return JoinSharedAlbumResponse.fromJson(jsonDecode(response.body));
-    });
+    printError(response);
+
+    return JoinSharedAlbumResponse.fromJson(jsonDecode(response.body));
   }
 
   Future<ShareAlbumResponse> shareAlbum(ShareAlbumRequest request) async {
-    return http
-        .post(
-            'https://photoslibrary.googleapis.com/v1/albums/${request.albumId}:share',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
+    final response = await http.post(
+        Uri.parse(
+            'https://photoslibrary.googleapis.com/v1/albums/${request.albumId}:share'),
+        headers: await _authHeaders);
 
-        return ShareAlbumResponse.fromJson(jsonDecode(response.body));
-      },
-    );
+    printError(response);
+
+    return ShareAlbumResponse.fromJson(jsonDecode(response.body));
   }
 
   Future<Album> getAlbum(GetAlbumRequest request) async {
-    return http
-        .get(
-            'https://photoslibrary.googleapis.com/v1/albums/${request.albumId}',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
+    final response = await http.get(
+        Uri.parse(
+            'https://photoslibrary.googleapis.com/v1/albums/${request.albumId}'),
+        headers: await _authHeaders);
 
-        return Album.fromJson(jsonDecode(response.body));
-      },
-    );
+    printError(response);
+
+    return Album.fromJson(jsonDecode(response.body));
   }
 
   Future<ListAlbumsResponse> listAlbums() async {
-    return http
-        .get(
-            'https://photoslibrary.googleapis.com/v1/albums?'
-            'pageSize=50&excludeNonAppCreatedData=true',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
+    final response = await http.get(
+        Uri.parse('https://photoslibrary.googleapis.com/v1/albums?'
+            'pageSize=50&excludeNonAppCreatedData=true'),
+        headers: await _authHeaders);
 
-        print(response.body);
+    printError(response);
 
-        return ListAlbumsResponse.fromJson(jsonDecode(response.body));
-      },
-    );
+    print(response.body);
+
+    return ListAlbumsResponse.fromJson(jsonDecode(response.body));
   }
 
   Future<ListSharedAlbumsResponse> listSharedAlbums() async {
-    return http
-        .get(
-            'https://photoslibrary.googleapis.com/v1/sharedAlbums?'
-            'pageSize=50&excludeNonAppCreatedData=true',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
+    final response = await http.get(
+        Uri.parse('https://photoslibrary.googleapis.com/v1/sharedAlbums?'
+            'pageSize=50&excludeNonAppCreatedData=true'),
+        headers: await _authHeaders);
 
-        print(response.body);
+    printError(response);
 
-        return ListSharedAlbumsResponse.fromJson(jsonDecode(response.body));
-      },
-    );
+    print(response.body);
+
+    return ListSharedAlbumsResponse.fromJson(jsonDecode(response.body));
   }
 
   Future<String> uploadMediaItem(File image) async {
@@ -158,55 +123,48 @@ class PhotosLibraryApiClient {
     headers['X-Goog-Upload-File-Name'] = filename;
 
     // Make the HTTP request to upload the image. The file is sent in the body.
-    return http
-        .post(
-      'https://photoslibrary.googleapis.com/v1/uploads',
+    final response = await http.post(
+      Uri.parse('https://photoslibrary.googleapis.com/v1/uploads'),
       body: image.readAsBytesSync(),
       headers: await _authHeaders,
-    )
-        .then((Response response) {
-      if (response.statusCode != 200) {
-        print(response.reasonPhrase);
-        print(response.body);
-      }
+    );
 
-      return response.body;
-    });
+    printError(response);
+
+    return response.body;
   }
 
   Future<SearchMediaItemsResponse> searchMediaItems(
       SearchMediaItemsRequest request) async {
-    return http
-        .post(
-      'https://photoslibrary.googleapis.com/v1/mediaItems:search',
+    final response = await http.post(
+      Uri.parse('https://photoslibrary.googleapis.com/v1/mediaItems:search'),
       body: jsonEncode(request),
       headers: await _authHeaders,
-    )
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-
-        return SearchMediaItemsResponse.fromJson(jsonDecode(response.body));
-      },
     );
+
+    printError(response);
+
+    return SearchMediaItemsResponse.fromJson(jsonDecode(response.body));
   }
 
   Future<BatchCreateMediaItemsResponse> batchCreateMediaItems(
       BatchCreateMediaItemsRequest request) async {
     print(request.toJson());
-    return http
-        .post('https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate',
-            body: jsonEncode(request), headers: await _authHeaders)
-        .then((Response response) {
-      if (response.statusCode != 200) {
-        print(response.reasonPhrase);
-        print(response.body);
-      }
+    final response = await http.post(
+        Uri.parse(
+            'https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate'),
+        body: jsonEncode(request),
+        headers: await _authHeaders);
 
-      return BatchCreateMediaItemsResponse.fromJson(jsonDecode(response.body));
-    });
+    printError(response);
+
+    return BatchCreateMediaItemsResponse.fromJson(jsonDecode(response.body));
+  }
+
+  static void printError(final Response response) {
+    if (response.statusCode != 200) {
+      print(response.reasonPhrase);
+      print(response.body);
+    }
   }
 }

@@ -133,20 +133,21 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   Future _getImage(BuildContext context) async {
     // Use the image_picker package to prompt the user for a photo from their
     // device.
-    final image = await _imagePicker
+    final pickedImage = await _imagePicker
         .getImage(
           source: ImageSource.camera,
-        )
-        .then((pickedFile) => File(pickedFile.path));
+        );
+    final pickedFile = File(pickedImage.path);
+
     // Store the image that was selected.
     setState(() {
-      _image = image;
+      _image = pickedFile;
       _isUploading = true;
     });
 
     // Make a request to upload the image to Google Photos once it was selected.
     final uploadToken = await ScopedModel.of<PhotosLibraryApiModel>(context)
-        .uploadMediaItem(image);
+        .uploadMediaItem(pickedFile);
 
     setState(() {
       // Once the upload process has completed, store the upload token.

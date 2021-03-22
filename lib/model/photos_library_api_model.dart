@@ -78,67 +78,48 @@ class PhotosLibraryApiModel extends Model {
   Future<void> signOut() => _googleSignIn.disconnect();
 
   Future<Album> createAlbum(String title) async {
-    return client
-        .createAlbum(CreateAlbumRequest.fromTitle(title))
-        .then((Album album) {
-      updateAlbums();
-      return album;
-    });
+    final album = await client.createAlbum(CreateAlbumRequest.fromTitle(title));
+    updateAlbums();
+    return album;
   }
 
-  Future<Album> getAlbum(String id) async {
-    return client
-        .getAlbum(GetAlbumRequest.defaultOptions(id))
-        .then((Album album) {
-      return album;
-    });
-  }
+  Future<Album> getAlbum(String id) async =>
+      await client.getAlbum(GetAlbumRequest.defaultOptions(id));
 
-  Future<JoinSharedAlbumResponse> joinSharedAlbum(String shareToken) {
-    return client
-        .joinSharedAlbum(JoinSharedAlbumRequest(shareToken))
-        .then((JoinSharedAlbumResponse response) {
-      updateAlbums();
-      return response;
-    });
+  Future<JoinSharedAlbumResponse> joinSharedAlbum(String shareToken) async {
+    final response =
+        await client.joinSharedAlbum(JoinSharedAlbumRequest(shareToken));
+    updateAlbums();
+    return response;
   }
 
   Future<ShareAlbumResponse> shareAlbum(String id) async {
-    return client
-        .shareAlbum(ShareAlbumRequest.defaultOptions(id))
-        .then((ShareAlbumResponse response) {
-      updateAlbums();
-      return response;
-    });
+    final response =
+        await client.shareAlbum(ShareAlbumRequest.defaultOptions(id));
+    updateAlbums();
+    return response;
   }
 
-  Future<SearchMediaItemsResponse> searchMediaItems(String albumId) async {
-    return client
-        .searchMediaItems(SearchMediaItemsRequest.albumId(albumId))
-        .then((SearchMediaItemsResponse response) {
-      return response;
-    });
-  }
+  Future<SearchMediaItemsResponse> searchMediaItems(String albumId) async =>
+      await client.searchMediaItems(SearchMediaItemsRequest.albumId(albumId));
 
   Future<String> uploadMediaItem(File image) {
     return client.uploadMediaItem(image);
   }
 
   Future<BatchCreateMediaItemsResponse> createMediaItem(
-      String uploadToken, String albumId, String description) {
+      String uploadToken, String albumId, String description) async {
     // Construct the request with the token, albumId and description.
     final request =
         BatchCreateMediaItemsRequest.inAlbum(uploadToken, albumId, description);
 
     // Make the API call to create the media item. The response contains a
     // media item.
-    return client
-        .batchCreateMediaItems(request)
-        .then((BatchCreateMediaItemsResponse response) {
-      // Print and return the response.
-      print(response.newMediaItemResults[0].toJson());
-      return response;
-    });
+    final response = await client.batchCreateMediaItems(request);
+
+    // Print and return the response.
+    print(response.newMediaItemResults[0].toJson());
+    return response;
   }
 
   UnmodifiableListView<Album> get albums =>
