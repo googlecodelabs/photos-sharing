@@ -81,46 +81,32 @@ class PhotosLibraryApiModel extends Model {
     return null;
   }
 
-  Future<Album> getAlbum(String id) async {
-    return client
-        .getAlbum(GetAlbumRequest.defaultOptions(id))
-        .then((Album album) {
-      return album;
-    });
-  }
+  Future<Album> getAlbum(String id) async =>
+      await client.getAlbum(GetAlbumRequest.defaultOptions(id));
 
-  Future<JoinSharedAlbumResponse> joinSharedAlbum(String shareToken) {
-    return client
-        .joinSharedAlbum(JoinSharedAlbumRequest(shareToken))
-        .then((JoinSharedAlbumResponse response) {
-      updateAlbums();
-      return response;
-    });
+  Future<JoinSharedAlbumResponse> joinSharedAlbum(String shareToken) async {
+    final response =
+        await client.joinSharedAlbum(JoinSharedAlbumRequest(shareToken));
+    updateAlbums();
+    return response;
   }
 
   Future<ShareAlbumResponse> shareAlbum(String id) async {
-    return client
-        .shareAlbum(ShareAlbumRequest.defaultOptions(id))
-        .then((ShareAlbumResponse response) {
-      updateAlbums();
-      return response;
-    });
+    final response =
+        await client.shareAlbum(ShareAlbumRequest.defaultOptions(id));
+    updateAlbums();
+    return response;
   }
 
-  Future<SearchMediaItemsResponse> searchMediaItems(String albumId) async {
-    return client
-        .searchMediaItems(SearchMediaItemsRequest.albumId(albumId))
-        .then((SearchMediaItemsResponse response) {
-      return response;
-    });
-  }
+  Future<SearchMediaItemsResponse> searchMediaItems(String albumId) async =>
+      await client.searchMediaItems(SearchMediaItemsRequest.albumId(albumId));
 
   Future<String> uploadMediaItem(File image) {
     return client.uploadMediaItem(image);
   }
 
   Future<BatchCreateMediaItemsResponse> createMediaItem(
-      String uploadToken, String albumId, String description) {
+      String uploadToken, String albumId, String description) async {
     // TODO(codelab): Implement this method.
 
     return null;
@@ -154,8 +140,7 @@ class PhotosLibraryApiModel extends Model {
 
     /*
     // Load albums from owned and shared albums
-    final List<List<Album>> list =
-    await Future.wait([_loadSharedAlbums(), _loadAlbums()]);
+    final list = await Future.wait([_loadSharedAlbums(), _loadAlbums()]);
 
     _albums.addAll(list.expand((a) => a ?? []));
     */

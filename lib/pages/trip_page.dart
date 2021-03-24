@@ -22,7 +22,6 @@ import 'package:sharing_codelab/components/contribute_photo_dialog.dart';
 import 'package:sharing_codelab/components/primary_raised_button.dart';
 import 'package:sharing_codelab/model/photos_library_api_model.dart';
 import 'package:sharing_codelab/photos_library_api/album.dart';
-import 'package:sharing_codelab/photos_library_api/batch_create_media_items_response.dart';
 import 'package:sharing_codelab/photos_library_api/media_item.dart';
 import 'package:sharing_codelab/photos_library_api/search_media_items_response.dart';
 import 'package:sharing_codelab/util/to_be_implemented.dart';
@@ -94,12 +93,12 @@ class _TripPageState extends State<TripPage> {
     // Once the album contains the shareInfo data, display its share token
   }
 
-  void _showShareableUrl(BuildContext context) {
+  Future<void> _showShareableUrl(BuildContext context) async {
     // TODO(codelab): Implement this method.
     ToBeImplemented.showMessage();
   }
 
-  void _showShareToken(BuildContext context) {
+  Future<void> _showShareToken(BuildContext context) async {
     // TODO(codelab): Implement this method.
     ToBeImplemented.showMessage();
   }
@@ -145,19 +144,24 @@ class _TripPageState extends State<TripPage> {
         });
   }
 
-  void _contributePhoto(BuildContext context) {
+  void _contributePhoto(BuildContext context) async {
+    // Show the contribute  dialog and upload a photo.
+    final contributeResult = await showDialog<ContributePhotoResult>(
+      context: context,
+      builder: (BuildContext context) {
+        return ContributePhotoDialog();
+      },
+    );
+
+    // Create the media item from the uploaded photo.
+    await ScopedModel.of<PhotosLibraryApiModel>(context).createMediaItem(
+        contributeResult.uploadToken, album.id, contributeResult.description);
+
+    // Do a new search for items inside this album and store its Future for display.
+    final response = ScopedModel.of<PhotosLibraryApiModel>(context)
+        .searchMediaItems(album.id);
     setState(() {
-      searchResponse = showDialog<ContributePhotoResult>(
-          context: context,
-          builder: (BuildContext context) {
-            return ContributePhotoDialog();
-          }).then((ContributePhotoResult result) {
-        return ScopedModel.of<PhotosLibraryApiModel>(context)
-            .createMediaItem(result.uploadToken, album.id, result.description);
-      }).then((BatchCreateMediaItemsResponse response) {
-        return ScopedModel.of<PhotosLibraryApiModel>(context)
-            .searchMediaItems(album.id);
-      });
+      searchResponse = response;
     });
   }
 
