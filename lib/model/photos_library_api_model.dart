@@ -82,7 +82,7 @@ class PhotosLibraryApiModel extends Model {
   }
 
   Future<Album> getAlbum(String id) async =>
-      await client.getAlbum(GetAlbumRequest.defaultOptions(id));
+      client.getAlbum(GetAlbumRequest.defaultOptions(id));
 
   Future<JoinSharedAlbumResponse> joinSharedAlbum(String shareToken) async {
     final response =
@@ -99,7 +99,7 @@ class PhotosLibraryApiModel extends Model {
   }
 
   Future<SearchMediaItemsResponse> searchMediaItems(String albumId) async =>
-      await client.searchMediaItems(SearchMediaItemsRequest.albumId(albumId));
+      client.searchMediaItems(SearchMediaItemsRequest.albumId(albumId));
 
   Future<String> uploadMediaItem(File image) {
     return client.uploadMediaItem(image);
