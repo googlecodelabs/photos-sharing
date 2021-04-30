@@ -90,7 +90,7 @@ class _TripPageState extends State<TripPage> {
       duration: Duration(seconds: 3),
       content: Text('Sharing Album...'),
     );
-    Scaffold.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
     // Share the album and update the local model
     await ScopedModel.of<PhotosLibraryApiModel>(context).shareAlbum(album.id);
@@ -161,18 +161,18 @@ class _TripPageState extends State<TripPage> {
                     text,
                   ),
                 ),
-                FlatButton(
-                  child: const Text('Copy'),
+                TextButton(
                   onPressed: () => Clipboard.setData(ClipboardData(text: text)),
+                  child: const Text('Copy'),
                 )
               ],
             ),
             actions: <Widget>[
-              FlatButton(
-                child: const Text('Close'),
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+                child: const Text('Close'),
               ),
             ],
           );
@@ -208,17 +208,15 @@ class _TripPageState extends State<TripPage> {
     return Column(children: <Widget>[
       Container(
         width: 254,
-        child: FlatButton(
+        child: TextButton(
           onPressed: () => _showShareableUrl(context),
-          textColor: Colors.green[800],
           child: const Text('SHARE WITH ANYONE'),
         ),
       ),
       Container(
         width: 254,
-        child: FlatButton(
+        child: TextButton(
           onPressed: () => _showShareToken(context),
-          textColor: Colors.green[800],
           child: const Text('SHARE IN FIELD TRIPPA'),
         ),
       ),

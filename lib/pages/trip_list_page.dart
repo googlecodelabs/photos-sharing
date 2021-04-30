@@ -187,8 +187,7 @@ class TripListPage extends StatelessWidget {
               ),
             ),
           ),
-          FlatButton(
-            textColor: Colors.green[800],
+          TextButton(
             onPressed: () {
               Navigator.push(
                 context,

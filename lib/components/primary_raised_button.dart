@@ -24,7 +24,7 @@ class PrimaryRaisedButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   @override
-  Widget build(BuildContext context) => RaisedButton.icon(
+  Widget build(BuildContext context) => ElevatedButton.icon(
         onPressed: onPressed,
         label: label,
         icon: const Icon(Icons.add),

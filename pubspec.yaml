@@ -22,13 +22,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cached_network_image: ^2.5.0
+  cached_network_image: ^3.0.0
   cupertino_icons: ^1.0.0
   flutter_svg: ^0.22.0
-  fluttertoast: ^7.1.8
-  google_sign_in: ^4.5.9
-  http: ^0.12.0+4
-  image_picker: ^0.6.7+22
+  fluttertoast: ^8.0.6
+  google_sign_in: ^5.0.2
+  http: ^0.13.2
+  image_picker: ^0.7.4
   json_annotation: ^3.1.1
   path: any
   scoped_model: ^1.0.1
@@ -37,7 +37,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.11.1
+  build_runner: ^1.11.5
   json_serializable: ^3.5.1
   pedantic: ^1.9.0
 
