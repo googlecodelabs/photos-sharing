@@ -68,7 +68,7 @@ class _JoinTripPageState extends State<JoinTripPage> {
                       ),
                     ),
                     Center(
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () => _joinTrip(context),
                         child: const Text('Join Trip'),
                       ),

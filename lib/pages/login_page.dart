@@ -50,9 +50,10 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: Color(0x99000000)),
               ),
             ),
-            RaisedButton(
-              padding: const EdgeInsets.all(15),
-              child: const Text('Connect with Google Photos'),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(15),
+              ),
               onPressed: () async {
                 try {
                   await apiModel.signIn() != null
@@ -63,6 +64,7 @@ class LoginPage extends StatelessWidget {
                   _showSignInError(context);
                 }
               },
+              child: const Text('Connect with Google Photos'),
             ),
           ],
         );
@@ -76,7 +78,7 @@ class LoginPage extends StatelessWidget {
       content: Text('Could not sign in.\n'
           'Is the Google Services file missing?'),
     );
-    Scaffold.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void _navigateToTripList(BuildContext context) {

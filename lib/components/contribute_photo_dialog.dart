@@ -56,8 +56,8 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
                       )),
                 ),
                 Align(
-                  child: _buildAddButton(context),
                   alignment: const FractionalOffset(1, 0),
+                  child: _buildAddButton(context),
                 )
               ],
             ),
@@ -67,26 +67,25 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
     );
   }
 
-  RaisedButton _buildAddButton(BuildContext context) {
+  ElevatedButton _buildAddButton(BuildContext context) {
     if (_image == null) {
       // No image has been selected yet
-      return const RaisedButton(
-        child: Text('ADD'),
+      return const ElevatedButton(
         onPressed: null,
+        child: Text('ADD'),
       );
     }
 
     if (_uploadToken == null) {
       // Upload has not completed yet
-      return const RaisedButton(
-        child: Text('Waiting for image upload'),
+      return const ElevatedButton(
         onPressed: null,
+        child: Text('Waiting for image upload'),
       );
     }
 
     // Otherwise, the upload has completed and an upload token is set
-    return RaisedButton(
-      child: const Text('ADD'),
+    return ElevatedButton(
       onPressed: () => Navigator.pop(
         context,
         ContributePhotoResult(
@@ -94,6 +93,7 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
           descriptionController.text,
         ),
       ),
+      child: const Text('ADD'),
     );
   }
 
@@ -120,10 +120,9 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
     // No image has been selected yet
     return Container(
       padding: const EdgeInsets.all(12),
-      child: FlatButton.icon(
+      child: TextButton.icon(
         onPressed: () => _getImage(context),
         label: const Text('UPLOAD PHOTO'),
-        textColor: Colors.green[800],
         icon: const Icon(Icons.file_upload),
       ),
     );

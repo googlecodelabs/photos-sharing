@@ -126,18 +126,18 @@ class _TripPageState extends State<TripPage> {
                     text,
                   ),
                 ),
-                FlatButton(
-                  child: const Text('Copy'),
+                TextButton(
                   onPressed: () => Clipboard.setData(ClipboardData(text: text)),
+                  child: const Text('Copy'),
                 )
               ],
             ),
             actions: <Widget>[
-              FlatButton(
-                child: const Text('Close'),
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+                child: const Text('Close'),
               ),
             ],
           );
@@ -173,17 +173,15 @@ class _TripPageState extends State<TripPage> {
     return Column(children: <Widget>[
       Container(
         width: 254,
-        child: FlatButton(
+        child: TextButton(
           onPressed: () => _showShareableUrl(context),
-          textColor: Colors.green[800],
           child: const Text('SHARE WITH ANYONE'),
         ),
       ),
       Container(
         width: 254,
-        child: FlatButton(
+        child: TextButton(
           onPressed: () => _showShareToken(context),
-          textColor: Colors.green[800],
           child: const Text('SHARE IN FIELD TRIPPA'),
         ),
       ),

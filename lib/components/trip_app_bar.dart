@@ -30,12 +30,12 @@ class TripAppBar extends StatelessWidget implements PreferredSizeWidget {
           title: Row(
             children: <Widget>[
               Container(
+                padding: const EdgeInsets.only(right: 8),
                 child: SvgPicture.asset(
                   'assets/ic_fieldTrippa.svg',
                   excludeFromSemantics: true,
                   color: Colors.green[800],
                 ),
-                padding: const EdgeInsets.only(right: 8),
               ),
               Text(
                 'Field Trippa',

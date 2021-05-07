@@ -53,13 +53,17 @@ ThemeData _buildTheme() {
       color: Colors.grey,
     ),
     accentColor: Colors.green[800],
-    buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: Colors.green[800],
-      textTheme: ButtonTextTheme.primary,
+    textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+      primary: Colors.green[800], // foreground
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
-    ),
+    )),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+      primary: Colors.green[800],
+    )),
     scaffoldBackgroundColor: Colors.white,
   );
 }
