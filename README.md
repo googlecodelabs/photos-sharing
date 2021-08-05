@@ -1,30 +1,10 @@
-# Google Photos Library API Sharing Codelab
+# Moved: Google Photos Library API Sharing Codelab
 
-This codelab shows you how to build an application that uses the Google Photos Library API
-in Flutter.
+The code for this codelab has moved to the [`flutter/codelabs` repository on
+GitHub](https://github.com/flutter/codelabs).  
 
-## What you will build
-
-In this codelab, you’ll build a Flutter app that integrates with the Google Photos Library API to 
-enable a group of people to share photos during a field trip. 
-
-## What you'll learn
-
-* How to use the Google Photos Library API to upload media and share albums
-* How to use Google Sign-In in Flutter
-* How to Make Google API calls from Flutter
-
-## What you’ll need
-
-* A Google Developers account and project
-* Two Google user accounts that have access to Google Photos
-* Flutter development environment set up, including two emulators or devices
-
-
-## Getting started
-
-Check out the `main` branch of this repository and follow the steps on
-http://codelabs.developers.google.com to get started.
+Follow the steps on
+https://codelabs.developers.google.com/codelabs/google-photos-sharing to get started.
 
 ## License
 
